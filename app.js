@@ -10,6 +10,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 const { resolve } = require("path");
+const { report } = require("process");
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -112,17 +113,21 @@ const team = [];
 
 function runEngineer(){
     promptEngineer().then(function(response){
-       
+        const engineer = new Engineer(response.name, response.id, response.email, response.github)
         if(response.another == "Engineer"){
-            team.push(JSON.stringify(response));
+            team.push(engineer);
             runEngineer();
         }else if(response.another == "Intern"){
-            team.push(JSON.stringify(response));
+            team.push(engineer);
             runIntern();
         }else if(response.another == "None"){
-            team.push(JSON.stringify(response));
+            team.push(engineer);
             console.log("Generating team...");
-            console.log(team)
+            
+            fs.writeFile("./renderHTML/team.html", render(team),function(err){
+                if(err) throw err;
+                console.log("Writing team file...")
+            });
             return;
         }
     })
@@ -130,17 +135,21 @@ function runEngineer(){
 
 function runIntern(){
     promptIntern().then(function(response){
-       
+       const intern = new Intern(response.name, response.id, response.email, response.school)
         if(response.another == "Engineer"){
-            team.push(JSON.stringify(response));
+            team.push(intern);
             runEngineer();
         }else if(response.another == "Intern"){
-            team.push(JSON.stringify(response));
+            team.push(intern);
             runIntern();
         }else if(response.another == "None"){
-            team.push(JSON.stringify(response));
+            team.push(intern);
             console.log("Generating team...");
-            console.log(team)
+            
+            fs.writeFile("./renderHTML/team.html", render(team),function(err){
+                if(err) throw err;
+                console.log("Writing team file...")
+            });
             return;
         }
     })
@@ -148,17 +157,22 @@ function runIntern(){
 
 function runManager(){
     promptManager().then(function(response){
-        
+        const manager = new Manager(response.name, response.id, response.email, response.officeNumber)
+
         if(response.another == "Engineer"){
-            team.push(JSON.stringify(response));
+            team.push(manager);
             runEngineer();
         }else if(response.another == "Intern"){
-            team.push(JSON.stringify(response));
+            team.push(manager);
             runIntern();
         }else if(response.another == "None"){
-            team.push(JSON.stringify(response));
+            team.push(manager);
             console.log("Generating team...");
-            console.log(team)
+            
+            fs.writeFile("./renderHTML/team.html", render(team),function(err){
+                if(err) throw err;
+                console.log("Writing team file...")
+            });
             return;
         }
     })
@@ -167,6 +181,7 @@ function runManager(){
 
 
 runManager();
+
 
 
 // After the user has input all employees desired, call the `render` function (required
