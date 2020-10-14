@@ -2,6 +2,9 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://www.mit.edu/~amini/LICENSE.md)
 <br>
  Team Generator will help create an HTML displaying a team of workers. Teams include a manager, engineers, and interns. Users will be prompted with a series of questions about their team and will be presented with a webpage displaying the team with their info. 
+
+ For a video walkthrough check out this [video.](https://youtu.be/LC0zLdoZEB4)
+ You can also check out other videos on my [YouTube.](https://www.youtube.com/channel/UCcs3EOl5uqBpDQ5vs87X55w/)
   
  ## Built With
 * JavaScript
